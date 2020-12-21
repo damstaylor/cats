@@ -5,6 +5,10 @@
       <h1 class="title">
         cats
       </h1>
+      <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+        <button type=button @click=getRandomKitty>Get random kitty!</button>
+        <img :src="imgUrl">
+      </div>
       <div class="links">
         <a
           href="https://nuxtjs.org/"
@@ -28,7 +32,33 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data() {
+    return {
+      imgUrl: null,
+    };
+  },
+  created() {
+  },
+  methods: {
+    get(url) {
+      const _com = this;
+      let xhr = new XMLHttpRequest();
+      xhr.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          const JSON_DATA = JSON.parse(this.responseText);
+          _com.imgUrl = JSON_DATA[0].url;
+        }
+      };
+      xhr.open("GET", url, true);
+      xhr.send();
+    },
+    getRandomKitty() {
+      const url = "https://api.thecatapi.com/v1/images/search";
+      this.get(url);
+    },
+  },
+}
 </script>
 
 <style>
