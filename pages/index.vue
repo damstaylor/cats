@@ -68,7 +68,7 @@ img {
 }
 
 .random-image img {
-  border: 1px solid grey;
+  border: 1px solid #35495e;
 }
 
 .title {
