@@ -1,31 +1,10 @@
 <template>
   <div class="container">
     <div>
-      <Logo />
-      <h1 class="title">
-        cats
-      </h1>
-      <div style="display: flex; align-items: center; justify-content: center; flex-direction: column;">
+      <h1 class="title">Cats portfolio</h1>
+      <div class=random-image>
         <button type=button @click=getRandomKitty>Get random kitty!</button>
         <img :src="imgUrl">
-      </div>
-      <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--green"
-        >
-          Documentation
-        </a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="button--grey"
-        >
-          GitHub
-        </a>
       </div>
     </div>
   </div>
@@ -62,6 +41,12 @@ export default {
 </script>
 
 <style>
+img {
+  height: 500px;
+  width: 100%;
+  object-fit: contain;
+}
+
 .container {
   margin: 0 auto;
   min-height: 100vh;
@@ -69,6 +54,21 @@ export default {
   justify-content: center;
   align-items: center;
   text-align: center;
+  flex-direction: column;
+}
+
+.random-image {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.random-image button {
+  margin: 20px 0;
+}
+
+.random-image img {
+  border: 1px solid grey;
 }
 
 .title {
@@ -87,17 +87,5 @@ export default {
   font-size: 100px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
-}
-
-.links {
-  padding-top: 15px;
 }
 </style>
