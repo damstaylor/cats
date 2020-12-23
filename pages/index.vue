@@ -20,21 +20,34 @@ export default {
   created() {
   },
   methods: {
-    get(url) {
-      const _com = this;
-      let xhr = new XMLHttpRequest();
-      xhr.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) {
-          const JSON_DATA = JSON.parse(this.responseText);
-          _com.imgUrl = JSON_DATA[0].url;
-        }
-      };
-      xhr.open("GET", url, true);
-      xhr.send();
-    },
     getRandomKitty() {
       const url = "https://api.thecatapi.com/v1/images/search";
-      this.get(url);
+      this.makeRequest(url, "GET").then(result => {
+        if (!result || !result[0] || !result[0].url) {
+          throw new Error('Error: result has wrong format: ' + result.toString());
+        }
+        this.imgUrl = result[0].url;
+      }).catch(e => {
+        console.error(e);
+      });
+    },
+    makeRequest(url, method = "GET") {
+	    let request = new XMLHttpRequest();
+      return new Promise(function (resolve, reject) {
+        request.onreadystatechange = function () {
+          if (request.readyState !== 4) {
+            return;
+          }
+          if (request.status >= 200 && request.status < 300) {
+            resolve(request.response);
+          } else {
+            reject(request.statusText);
+          }
+        };
+        request.responseType = "json";
+        request.open(method, url, true);
+        request.send();
+      });
     },
   },
 }
