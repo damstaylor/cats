@@ -2,7 +2,7 @@
   <div class="container">
     <div>
       <h1 class="title">Cats portfolio</h1>
-      <div class=random-image>
+      <div class=image-container>
         <button type=button @click=getRandomKitty>Get random kitty!</button>
         <img :src="imgUrl">
       </div>
@@ -73,17 +73,17 @@ img {
   flex-direction: column;
 }
 
-.random-image {
+.image-container {
   display: flex;
   align-items: center;
   flex-direction: column;
 }
 
-.random-image button {
+.image-container button {
   margin: 20px 0;
 }
 
-.random-image img {
+.image-container img {
   border: 1px solid whitesmoke;
 }
 
