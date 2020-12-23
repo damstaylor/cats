@@ -58,9 +58,12 @@ img {
   height: 500px;
   width: 100%;
   object-fit: contain;
+  background-color: rgb(70, 70, 70);
 }
 
 .container {
+  color: whitesmoke;
+  background-color: rgb(42, 42, 42);
   margin: 0 auto;
   min-height: 100vh;
   display: flex;
@@ -81,7 +84,7 @@ img {
 }
 
 .random-image img {
-  border: 1px solid #35495e;
+  border: 1px solid whitesmoke;
 }
 
 .title {
@@ -98,7 +101,6 @@ img {
   display: block;
   font-weight: 300;
   font-size: 100px;
-  color: #35495e;
   letter-spacing: 1px;
 }
 </style>
