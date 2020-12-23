@@ -18,6 +18,7 @@ export default {
     };
   },
   created() {
+    this.getRandomKitty();
   },
   methods: {
     getRandomKitty() {
@@ -56,7 +57,6 @@ export default {
 <style>
 img {
   height: 500px;
-  width: 100%;
   object-fit: contain;
   background-color: rgb(70, 70, 70);
 }
