@@ -17,7 +17,7 @@ export default {
       imgUrl: null,
     };
   },
-  created() {
+  mounted() {
     this.getRandomKitty();
   },
   methods: {
