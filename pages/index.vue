@@ -1,10 +1,15 @@
 <template>
   <div class="container">
     <div>
-      <h1 class="title">Cats portfolio</h1>
       <div class=image-container>
-        <button type=button @click=getRandomKitty>Get random kitty!</button>
         <img :src="imgUrl">
+        <button type=button @click=getRandomKitty>Get random kitty!</button>
+      </div>
+      <h1 class="title">Cats portfolio</h1>
+    </div>
+    <div class=pictures>
+      <div v-for="(pic, idx) in pictures" :key=idx class=image-container>
+        <img :src="pic.url">
       </div>
     </div>
   </div>
@@ -15,12 +20,30 @@ export default {
   data() {
     return {
       imgUrl: null,
+      fetchedData: null,
+      pictures: [],
+      limit: 9,
+      page: 0,
+      order: "Desc",
     };
   },
   mounted() {
     this.getRandomKitty();
+    this.getPictures();
   },
   methods: {
+    getPictures() {
+      const url = `https://api.thecatapi.com/v1/images/search?limit=${this.limit}&page=${this.page}&order=${this.order}`;
+      this.makeRequest(url, "GET").then(result => {
+        if (!Array.isArray(result)) {
+          throw new Error('Error: result has wrong format: ' + result.toString());
+        }
+        console.log(result);
+        this.pictures = result;
+      }).catch(e => {
+        console.error(e);
+      });
+    },
     getRandomKitty() {
       const url = "https://api.thecatapi.com/v1/images/search";
       this.makeRequest(url, "GET").then(result => {
