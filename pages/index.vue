@@ -79,9 +79,26 @@ export default {
 
 <style>
 img {
-  height: 500px;
+  height: 200px;
   object-fit: contain;
   background-color: rgb(70, 70, 70);
+}
+
+.pictures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.pictures .image-container {
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-auto-rows: minmax(100px, auto);
+}
+
+.pictures .image-container img {
+  height: 150px;
 }
 
 .container {
@@ -100,6 +117,7 @@ img {
   display: flex;
   align-items: center;
   flex-direction: column;
+  background-color: #555555;
 }
 
 .image-container button {
@@ -125,5 +143,6 @@ img {
   font-weight: 300;
   font-size: 100px;
   letter-spacing: 1px;
+  margin-bottom: 20px;
 }
 </style>
