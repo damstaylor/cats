@@ -23,7 +23,7 @@
             <li class="current-page-indicator"><a>{{ page + 1 }}</a></li>
             <li v-show="getNumberOfPages && page < getNumberOfPages - 1"><a @click="increasePage">{{ page + 2 }}</a></li>
             <li v-show="getNumberOfPages && page < getNumberOfPages - 2"><span>...</span></li>
-            <li v-show="getNumberOfPages && page < getNumberOfPages - 2"><a @click="increasePage">&gt;</a></li>
+            <li v-show="getNumberOfPages && page < getNumberOfPages - 1"><a @click="increasePage">&gt;</a></li>
             <li><a @click="setPage(getNumberOfPages - 1)">»</a></li>
         </ul>
       </nav>
