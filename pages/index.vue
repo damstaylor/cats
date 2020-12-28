@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <div>
+    <div class="random-kitty">
       <div class=image-container>
         <img :src="imgUrl">
         <button type=button @click=getRandomKitty>Get random kitty!</button>
@@ -113,6 +113,10 @@ export default {
 </script>
 
 <style>
+a:hover {
+  cursor: pointer;
+}
+
 img {
   height: 200px;
   object-fit: contain;
@@ -148,6 +152,10 @@ img {
   flex-direction: column;
 }
 
+.container .random-kitty .image-container {
+  padding: 20px;
+}
+
 .image-container {
   display: flex;
   align-items: center;
@@ -156,7 +164,7 @@ img {
 }
 
 .image-container button {
-  margin: 20px 0;
+  margin: 10px 0;
 }
 
 .image-container img {
@@ -179,5 +187,36 @@ img {
   font-size: 100px;
   letter-spacing: 1px;
   margin-bottom: 20px;
+}
+
+footer {
+  margin: 10px 0;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+}
+        
+.pagination {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  column-gap: 5px;
+}
+        
+.pagination li {
+  display: flex;
+  align-items: center;
+  margin: 0 1px;
+}
+
+.pagination li.current-page-indicator {
+  width: 20px;
+  height: 20px;
+  border: 1px solid whitesmoke;
+  border-radius: 20%;
+  justify-content: center;
 }
 </style>
