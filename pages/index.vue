@@ -12,6 +12,22 @@
         <img :src="pic.url">
       </div>
     </div>
+    <div></div>
+    <footer>
+      <nav>
+        <ul class="pagination">
+            <li><a @click="setPage(0)">«</a></li>
+            <li><a @click="decreasePage">&lt;</a></li>
+            <li v-show="page > 1"><span>...</span></li>
+            <li v-if="page > 0"><a @click="decreasePage">{{ page }}</a></li>
+            <li class="current-page-indicator"><a>{{ page + 1 }}</a></li>
+            <li><a @click="increasePage">{{ page + 2 }}</a></li>
+            <li><span>...</span></li>
+            <li><a @click="increasePage">&gt;</a></li>
+            <li><a>»</a></li>
+        </ul>
+      </nav>
+    </footer>
   </div>
 </template>
 
@@ -73,6 +89,25 @@ export default {
         request.send();
       });
     },
+    setPage(pageIdx = 0) {
+      if (pageIdx < 0) {
+        pageIdx = 0;
+      }
+      this.page = pageIdx;
+    },
+    increasePage() {
+      this.page++;
+    },
+    decreasePage() {
+      if (this.page > 0) {
+        this.page--;
+      }
+    },
+  },
+  watch: {
+    page: function() {
+      this.getPictures();
+    }
   },
 }
 </script>
