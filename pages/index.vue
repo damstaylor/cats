@@ -19,12 +19,12 @@
             <li><a @click="setPage(0)">«</a></li>
             <li><a @click="decreasePage">&lt;</a></li>
             <li v-show="page > 1"><span>...</span></li>
-            <li v-if="page > 0"><a @click="decreasePage">{{ page }}</a></li>
+            <li v-show="page > 0"><a @click="decreasePage">{{ page }}</a></li>
             <li class="current-page-indicator"><a>{{ page + 1 }}</a></li>
-            <li><a @click="increasePage">{{ page + 2 }}</a></li>
-            <li><span>...</span></li>
-            <li><a @click="increasePage">&gt;</a></li>
-            <li><a>»</a></li>
+            <li v-show="getNumberOfPages && page < getNumberOfPages - 1"><a @click="increasePage">{{ page + 2 }}</a></li>
+            <li v-show="getNumberOfPages && page < getNumberOfPages - 2"><span>...</span></li>
+            <li v-show="getNumberOfPages && page < getNumberOfPages - 2"><a @click="increasePage">&gt;</a></li>
+            <li><a @click="setPage(getNumberOfPages - 1)">»</a></li>
         </ul>
       </nav>
     </footer>
@@ -35,6 +35,8 @@
 export default {
   data() {
     return {
+      API_KEY: "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16",
+      headers: null,
       imgUrl: null,
       fetchedData: null,
       pictures: [],
@@ -47,15 +49,38 @@ export default {
     this.getRandomKitty();
     this.getPictures();
   },
+  computed: {
+    getResponseHeaders() {
+      if (!this.headers) {
+        return null;
+      }
+      let obj = {};
+      const headersKeyValue = this.headers.split('\n');
+      headersKeyValue.filter(str => str !== "").forEach(str => {
+        const arr = str.split(': ');
+        obj[arr[0]] = arr[1];
+      });
+      return obj;
+    },
+    getPaginationCount() {
+      return this.getResponseHeaders ? this.getResponseHeaders['pagination-count'] : 0;
+    },
+   
+    getNumberOfPages() {
+      return Math.ceil(this.getPaginationCount / this.limit);
+    },
+  },
   methods: {
     getPictures() {
       const url = `https://api.thecatapi.com/v1/images/search?limit=${this.limit}&page=${this.page}&order=${this.order}`;
       this.makeRequest(url, "GET").then(result => {
-        if (!Array.isArray(result)) {
-          throw new Error('Error: result has wrong format: ' + result.toString());
+        this.headers = result.headers;
+        const response = result.response;
+        if (!Array.isArray(response)) {
+          throw new Error('Error: response has wrong format: ' + response.toString());
         }
         console.log(result);
-        this.pictures = result;
+        this.pictures = response;
       }).catch(e => {
         console.error(e);
       });
@@ -63,6 +88,7 @@ export default {
     getRandomKitty() {
       const url = "https://api.thecatapi.com/v1/images/search";
       this.makeRequest(url, "GET").then(result => {
+        result = result.response;
         if (!result || !result[0] || !result[0].url) {
           throw new Error('Error: result has wrong format: ' + result.toString());
         }
@@ -72,6 +98,7 @@ export default {
       });
     },
     makeRequest(url, method = "GET") {
+      const _app = this;
 	    let request = new XMLHttpRequest();
       return new Promise(function (resolve, reject) {
         request.onreadystatechange = function () {
@@ -79,13 +106,14 @@ export default {
             return;
           }
           if (request.status >= 200 && request.status < 300) {
-            resolve(request.response);
+            resolve({headers: request.getAllResponseHeaders(), response: request.response});
           } else {
             reject(request.statusText);
           }
         };
         request.responseType = "json";
         request.open(method, url, true);
+        request.setRequestHeader('x-api-key', _app.API_KEY);
         request.send();
       });
     },
@@ -96,7 +124,9 @@ export default {
       this.page = pageIdx;
     },
     increasePage() {
-      this.page++;
+      if (this.page < this.getNumberOfPages - 1) {
+        this.page++;
+      }
     },
     decreasePage() {
       if (this.page > 0) {
@@ -213,10 +243,8 @@ nav {
 }
 
 .pagination li.current-page-indicator {
-  width: 20px;
-  height: 20px;
   border: 1px solid whitesmoke;
-  border-radius: 20%;
+  border-radius: 10%;
   justify-content: center;
 }
 </style>
