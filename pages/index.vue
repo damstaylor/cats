@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="title">Cats portfolio</h1>
     <div class=pictures>
-      <div v-for="(pic, idx) in pictures" :key=idx class=image-container>
+      <div v-for="(pic, idx) in pictures" :key=idx class="image-container">
         <img :src="pic.url">
         <div class="picture-info">
           <span>{{ getBreedName(pic) }}</span>
