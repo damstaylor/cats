@@ -167,8 +167,11 @@ img {
   flex-direction: column;
 }
 
-.container .random-kitty .image-container {
-  padding: 20px;
+.pictures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+  grid-template-columns: repeat(3, minmax(250px, 1fr));
 }
 
 .image-container {
@@ -236,5 +239,25 @@ nav {
   border: 1px solid whitesmoke;
   border-radius: 10%;
   justify-content: center;
+}
+
+@media (max-width: 992px) {
+  .title {
+    font-size: 40px;
+  }
+
+  .pictures {
+    grid-template-columns: repeat(2, minmax(250px, 1fr));
+  }
+}
+
+@media (max-width: 720px) {
+  .title {
+    font-size: 30px;
+  }
+
+  .pictures {
+    grid-template-columns: repeat(1, minmax(250px, 1fr));
+  }
 }
 </style>
