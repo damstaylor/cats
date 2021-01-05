@@ -135,23 +135,6 @@ img {
   background-color: rgb(70, 70, 70);
 }
 
-.pictures {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-}
-
-.pictures .image-container {
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 10px;
-  grid-auto-rows: minmax(100px, auto);
-}
-
-.pictures .image-container img {
-  height: 150px;
-}
-
 .container {
   color: whitesmoke;
   background-color: rgb(42, 42, 42);
@@ -181,6 +164,11 @@ img {
 
 .image-container img {
   border: 1px solid whitesmoke;
+  margin: 10px;
+}
+
+.image-container .picture-info {
+  margin-bottom: 10px;
 }
 
 .title {
@@ -196,13 +184,13 @@ img {
     sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 60px;
   letter-spacing: 1px;
-  margin-bottom: 20px;
+  margin: 20px 0;
 }
 
 footer {
-  margin: 10px 0;
+  margin: 20px 0;
 }
 
 nav {
