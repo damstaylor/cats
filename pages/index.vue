@@ -1,12 +1,6 @@
 <template>
   <div class="container">
-    <div class="random-kitty">
-      <div class=image-container>
-        <img :src="imgUrl">
-        <button type=button @click=getRandomKitty>Get random kitty!</button>
-      </div>
-      <h1 class="title">Cats portfolio</h1>
-    </div>
+    <h1 class="title">Cats portfolio</h1>
     <div class=pictures>
       <div v-for="(pic, idx) in pictures" :key=idx class=image-container>
         <img :src="pic.url">
@@ -81,18 +75,6 @@ export default {
         }
         console.log(result);
         this.pictures = response;
-      }).catch(e => {
-        console.error(e);
-      });
-    },
-    getRandomKitty() {
-      const url = "https://api.thecatapi.com/v1/images/search";
-      this.makeRequest(url, "GET").then(result => {
-        result = result.response;
-        if (!result || !result[0] || !result[0].url) {
-          throw new Error('Error: result has wrong format: ' + result.toString());
-        }
-        this.imgUrl = result[0].url;
       }).catch(e => {
         console.error(e);
       });
