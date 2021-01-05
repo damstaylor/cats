@@ -4,6 +4,10 @@
     <div class=pictures>
       <div v-for="(pic, idx) in pictures" :key=idx class=image-container>
         <img :src="pic.url">
+        <div class="picture-info">
+          <span>{{ getBreedName(pic) }}</span>
+          <a v-if="getWikiUrl(pic)" :href="getWikiUrl(pic)">{{ getOrigin(pic) }}</a>
+        </div>
       </div>
     </div>
     <div></div>
@@ -58,9 +62,26 @@ export default {
     getPaginationCount() {
       return this.getResponseHeaders ? this.getResponseHeaders['pagination-count'] : 0;
     },
-   
     getNumberOfPages() {
       return Math.ceil(this.getPaginationCount / this.limit);
+    },
+    getBreedObject() {
+      return data => data?.breed?.[0] ?? null;
+    },
+    getBreedName() {
+      return data => {
+        return this.getBreedObject(data)?.name ?? "Unknown breed"
+      };
+    },
+    getOrigin() {
+      return data => {
+        return this.getBreedObject(data)?.origin ?? "Unknown origin";
+      };
+    },
+    getWikiUrl() {
+      return data => {
+        return this.getBreedObject(data)?.wikipedia_url ? `(${this.getBreedObject(data)?.wikipedia_url})` : null;
+      };
     },
   },
   methods: {
