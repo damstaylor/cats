@@ -14,15 +14,15 @@
     <footer>
       <nav>
         <ul class="pagination">
-            <li><a @click="setPage(0)">«</a></li>
-            <li><a @click="decreasePage">&lt;</a></li>
+            <li><a :class="{'disabled': userPage === 1}" @click="setPage(0)">«</a></li>
+            <li><a :class="{'disabled': userPage === 1}" @click="decreasePage">&lt;</a></li>
             <li :class="{hidden: getNumberOfPages && userPage < 3}"><span>...</span></li>
             <li :class="{hidden: getNumberOfPages && userPage === 1}"><a @click="decreasePage">{{ userPage - 1 }}</a></li>
             <li class="current-page-indicator"><a>{{ userPage }}</a></li>
             <li :class="{hidden: getNumberOfPages && userPage === getNumberOfPages}"><a @click="increasePage">{{ userPage + 1 }}</a></li>
             <li :class="{hidden: getNumberOfPages && userPage > getNumberOfPages - 2 }"><span>...</span></li>
-            <li><a @click="increasePage">&gt;</a></li>
-            <li><a @click="setPage(getNumberOfPages - 1)">»</a></li>
+            <li><a :class="{'disabled': userPage === getNumberOfPages}" @click="increasePage">&gt;</a></li>
+            <li><a :class="{'disabled': userPage === getNumberOfPages}" @click="setPage(getNumberOfPages - 1)">»</a></li>
         </ul>
         <div class="go-to-page">
           <label for="go-to-page-input">Go to page:</label>
@@ -145,7 +145,7 @@ export default {
 </script>
 
 <style>
-a:any-link {
+a:any-link, li a:hover:not(.disabled), .current-page-indicator {
   color: dodgerblue;
 }
 
@@ -155,6 +155,11 @@ a:hover {
 
 .hidden {
   visibility: hidden;
+}
+
+.disabled {
+  color: #555555;
+  cursor: default !important;
 }
 
 .container {
@@ -262,7 +267,7 @@ nav {
 }
 
 .pagination li.current-page-indicator {
-  border: 1px solid whitesmoke;
+  border: 1px solid dodgerblue;
   border-radius: 10%;
   justify-content: center;
 }
