@@ -37,7 +37,6 @@ export default {
       API_KEY: "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16",
       headers: null,
       imgUrl: null,
-      fetchedData: null,
       pictures: [],
       limit: 9,
       page: 0,
@@ -48,20 +47,8 @@ export default {
     this.getPictures();
   },
   computed: {
-    getResponseHeaders() {
-      if (!this.headers) {
-        return null;
-      }
-      let obj = {};
-      const headersKeyValue = this.headers.split('\n');
-      headersKeyValue.filter(str => str !== "").forEach(str => {
-        const arr = str.split(': ');
-        obj[arr[0]] = arr[1];
-      });
-      return obj;
-    },
     getPaginationCount() {
-      return this.getResponseHeaders ? this.getResponseHeaders['pagination-count'] : 0;
+      return this.headers ? this.headers["pagination-count"] : null;
     },
     getNumberOfPages() {
       return Math.ceil(this.getPaginationCount / this.limit);
@@ -94,30 +81,20 @@ export default {
         if (!Array.isArray(response)) {
           throw new Error('Error: response has wrong format: ' + response.toString());
         }
-        console.log(result);
         this.pictures = response;
       }).catch(e => {
         console.error(e);
       });
     },
     makeRequest(url, method = "GET") {
-      const _app = this;
-	    let request = new XMLHttpRequest();
-      return new Promise(function (resolve, reject) {
-        request.onreadystatechange = function () {
-          if (request.readyState !== 4) {
-            return;
-          }
-          if (request.status >= 200 && request.status < 300) {
-            resolve({headers: request.getAllResponseHeaders(), response: request.response});
-          } else {
-            reject(request.statusText);
-          }
-        };
-        request.responseType = "json";
-        request.open(method, url, true);
-        request.setRequestHeader('x-api-key', _app.API_KEY);
-        request.send();
+      const HEADERS = { "Content-Type": "application/json", "x-api-key": this.API_KEY };
+      const req = new Request(url, { method: method, headers: HEADERS, mode: "cors" });
+      return fetch(req).then(data => {
+        this.headers = { "pagination-count": Number(data.headers.get("pagination-count")) };
+        return data;
+      }).then(res => res.json()).catch(e => {
+        console.error(e);
+        return e;
       });
     },
     setPage(pageIdx = 0) {
