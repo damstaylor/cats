@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1 class="title">Cats portfolio</h1>
-    <div class=pictures>
+    <div class="pictures" :class="'grid-template-col-' + limit">
       <div v-for="(pic, idx) in pictures" :key=idx class="image-container">
         <img :src="pic.url" :alt="getBreedName(pic)">
         <div class="picture-info">
@@ -28,6 +28,14 @@
         <div class="go-to-page">
           <label for="go-to-page-input">Go to page:</label>
           <input id="go-to-page-input" type="number" min=1 :max="getNumberOfPages" :value="userPage" @change="onPageNumberInput" >
+        </div>
+        <div>
+          <label for="per-page-select">Images per page:</label>
+          <select name="per-page" id="per-page-select" @input="onPerPageInput">
+            <option value="4">4</option>
+            <option value="9" selected>9</option>
+            <option value="16">16</option>
+          </select>
         </div>
       </nav>
     </footer>
@@ -120,13 +128,20 @@ export default {
     },
     onPageNumberInput(event) {
       let newUserPage = Number(event.target.value);
+      if (newUserPage < 1) {
+        newUserPage = 1;
+      } else if (newUserPage > this.getNumberOfPages) {
+        newUserPage = this.getNumberOfPages;
+      }
       this.setPage(newUserPage - 1);
+    },
+    onPerPageInput(event) {
+      this.limit = Number(event.target.value);
     },
   },
   watch: {
-    page: function() {
-      this.getPictures();
-    }
+    page: 'getPictures',
+    limit: 'getPictures',
   },
 }
 </script>
@@ -164,9 +179,19 @@ img {
 
 .pictures {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
   grid-gap: 10px;
+}
+
+.grid-template-col-4 {
+  grid-template-columns: repeat(2, minmax(250px, 1fr));
+}
+
+.grid-template-col-9 {
   grid-template-columns: repeat(3, minmax(250px, 1fr));
+}
+
+.grid-template-col-16 {
+  grid-template-columns: repeat(4, minmax(250px, 1fr));
 }
 
 .image-container {
