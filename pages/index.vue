@@ -172,6 +172,7 @@ a:hover {
 .pictures {
   display: grid;
   grid-gap: 10px;
+  width: 90%;
 }
 
 .grid-template-col-4 {
