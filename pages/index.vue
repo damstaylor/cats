@@ -17,11 +17,11 @@
         <ul class="pagination">
             <li><a @click="setPage(0)">«</a></li>
             <li><a @click="decreasePage">&lt;</a></li>
-            <li v-show="page > 1"><span>...</span></li>
-            <li v-show="page > 0"><a @click="decreasePage">{{ page }}</a></li>
-            <li class="current-page-indicator"><a>{{ page + 1 }}</a></li>
-            <li v-show="getNumberOfPages && page < getNumberOfPages - 1"><a @click="increasePage">{{ page + 2 }}</a></li>
-            <li v-show="getNumberOfPages && page < getNumberOfPages - 2"><span>...</span></li>
+            <li :class="{hidden: getNumberOfPages && userPage < 3}"><span>...</span></li>
+            <li :class="{hidden: getNumberOfPages && userPage === 1}"><a @click="decreasePage">{{ userPage - 1 }}</a></li>
+            <li class="current-page-indicator"><a>{{ userPage }}</a></li>
+            <li :class="{hidden: getNumberOfPages && userPage === getNumberOfPages}"><a @click="increasePage">{{ userPage + 1 }}</a></li>
+            <li :class="{hidden: getNumberOfPages && userPage > getNumberOfPages - 2 }"><span>...</span></li>
             <li><a @click="increasePage">&gt;</a></li>
             <li><a @click="setPage(getNumberOfPages - 1)">»</a></li>
         </ul>
@@ -47,6 +47,9 @@ export default {
     this.getPictures();
   },
   computed: {
+    userPage() {
+      return this.page + 1;
+    },
     getPaginationCount() {
       return this.headers ? this.headers["pagination-count"] : null;
     },
@@ -75,9 +78,7 @@ export default {
   methods: {
     getPictures() {
       const url = `https://api.thecatapi.com/v1/images/search?limit=${this.limit}&order=${this.order}&page=${this.page}&has_breeds=1`;
-      this.makeRequest(url, "GET").then(result => {
-        this.headers = result.headers;
-        const response = result.response;
+      this.makeRequest(url, "GET").then(response => {
         if (!Array.isArray(response)) {
           throw new Error('Error: response has wrong format: ' + response.toString());
         }
@@ -135,6 +136,10 @@ img {
   height: 200px;
   object-fit: contain;
   background-color: rgb(70, 70, 70);
+}
+
+.hidden {
+  visibility: hidden;
 }
 
 .container {
@@ -209,6 +214,10 @@ nav {
   padding: 0;
   display: flex;
   column-gap: 5px;
+}
+
+.pagination a {
+  width: 30px;
 }
         
 .pagination li {
