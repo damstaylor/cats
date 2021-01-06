@@ -25,6 +25,10 @@
             <li><a @click="increasePage">&gt;</a></li>
             <li><a @click="setPage(getNumberOfPages - 1)">»</a></li>
         </ul>
+        <div class="go-to-page">
+          <label for="go-to-page-input">Go to page:</label>
+          <input id="go-to-page-input" type="number" min=1 :max="getNumberOfPages" :value="userPage" @change="onPageNumberInput" >
+        </div>
       </nav>
     </footer>
   </div>
@@ -113,6 +117,10 @@ export default {
       if (this.page > 0) {
         this.page--;
       }
+    },
+    onPageNumberInput(event) {
+      let newUserPage = Number(event.target.value);
+      this.setPage(newUserPage - 1);
     },
   },
   watch: {
@@ -206,6 +214,11 @@ footer {
 nav {
   display: flex;
   justify-content: center;
+  flex-direction: column;
+}
+
+.go-to-page {
+  margin: 10px 0;
 }
         
 .pagination {
