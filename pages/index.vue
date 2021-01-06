@@ -3,10 +3,11 @@
     <h1 class="title">Cats portfolio</h1>
     <div class=pictures>
       <div v-for="(pic, idx) in pictures" :key=idx class="image-container">
-        <img :src="pic.url">
+        <img :src="pic.url" :alt="getBreedName(pic)">
         <div class="picture-info">
-          <span>{{ getBreedName(pic) }}</span>
-          <a v-if="getWikiUrl(pic)" :href="getWikiUrl(pic)">{{ getOrigin(pic) }}</a>
+          <a v-if="getWikiUrl(pic)" :href="getWikiUrl(pic)" target="_blank">{{ getBreedName(pic) }}</a>
+          <span v-else>{{ getBreedName(pic) }}</span>
+          <span> ({{ getOrigin(pic) }})</span>
         </div>
       </div>
     </div>
@@ -40,7 +41,7 @@ export default {
       pictures: [],
       limit: 9,
       page: 0,
-      order: "Desc",
+      order: "Asc",
     };
   },
   mounted() {
@@ -66,7 +67,7 @@ export default {
       return Math.ceil(this.getPaginationCount / this.limit);
     },
     getBreedObject() {
-      return data => data?.breed?.[0] ?? null;
+      return data => data?.breeds?.[0] ?? null;
     },
     getBreedName() {
       return data => {
@@ -80,13 +81,13 @@ export default {
     },
     getWikiUrl() {
       return data => {
-        return this.getBreedObject(data)?.wikipedia_url ? `(${this.getBreedObject(data)?.wikipedia_url})` : null;
+        return this.getBreedObject(data)?.wikipedia_url ?? null;
       };
     },
   },
   methods: {
     getPictures() {
-      const url = `https://api.thecatapi.com/v1/images/search?limit=${this.limit}&page=${this.page}&order=${this.order}`;
+      const url = `https://api.thecatapi.com/v1/images/search?limit=${this.limit}&order=${this.order}&page=${this.page}&has_breeds=1`;
       this.makeRequest(url, "GET").then(result => {
         this.headers = result.headers;
         const response = result.response;
@@ -145,6 +146,10 @@ export default {
 </script>
 
 <style>
+a:any-link {
+  color: dodgerblue;
+}
+
 a:hover {
   cursor: pointer;
 }
