@@ -200,7 +200,7 @@ a:hover {
 }
 
 .image-container, .image-container img {
-  border-radius: .3rem;;
+  border-radius: .5rem;;
 }
 
 .image-container button {
