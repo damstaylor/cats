@@ -1,6 +1,6 @@
 # cats
 
-![alt text](https://github.com/damstaylor/cats/blob/master/cats-portfolio-preview.png)
+![preview](https://github.com/damstaylor/cats/blob/master/cats-portfolio-preview.png)
 
 ## About
 
