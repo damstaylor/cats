@@ -12,9 +12,16 @@ The challenge comes with the following constraints:
 * Do not use any existing component libraries (bootstrap, vuetify, element ect...)
 
 
-## Build Setup
+## How to launch the app
+
+* Download the source code and unzip it.
+
+* Open a terminal app and enter the following commands:
 
 ```bash
+# Go to the unzipped directory (replace content below by accurate path)
+$ cd Path/Of/The/Folder/cats-master
+
 # install dependencies
 $ npm install
 
@@ -28,5 +35,7 @@ $ npm run start
 # generate static project
 $ npm run generate
 ```
+
+* Open your favorite browser and go to the following link: `http://localhost:3000/`
 
 For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).

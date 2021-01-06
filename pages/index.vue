@@ -11,7 +11,6 @@
         </div>
       </div>
     </div>
-    <div></div>
     <footer>
       <nav>
         <ul class="pagination">
@@ -154,12 +153,6 @@ a:hover {
   cursor: pointer;
 }
 
-img {
-  height: 200px;
-  object-fit: contain;
-  background-color: rgb(70, 70, 70);
-}
-
 .hidden {
   visibility: hidden;
 }
@@ -182,15 +175,15 @@ img {
 }
 
 .grid-template-col-4 {
-  grid-template-columns: repeat(2, minmax(250px, 1fr));
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .grid-template-col-9 {
-  grid-template-columns: repeat(3, minmax(250px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .grid-template-col-16 {
-  grid-template-columns: repeat(4, minmax(250px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .image-container {
@@ -205,6 +198,10 @@ img {
 }
 
 .image-container img {
+  height: 200px;
+  max-width: calc(100% - 20px);
+  object-fit: contain;
+  background-color: rgb(70, 70, 70);
   border: 1px solid whitesmoke;
   margin: 10px;
 }
