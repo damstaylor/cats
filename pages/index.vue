@@ -199,6 +199,10 @@ a:hover {
   background-color: #555555;
 }
 
+.image-container, .image-container img {
+  border-radius: .3rem;;
+}
+
 .image-container button {
   margin: 10px 0;
 }
@@ -231,7 +235,13 @@ a:hover {
   font-weight: 300;
   font-size: 60px;
   letter-spacing: 1px;
-  margin: 20px 0;
+  margin: 70px 0 20px;
+}
+
+.title::after {
+  content: " \1F43E";
+  color: transparent;
+  text-shadow: 0 0 0 whitesmoke;
 }
 
 footer {
@@ -268,7 +278,7 @@ nav {
 
 .pagination li.current-page-indicator {
   border: 1px solid dodgerblue;
-  border-radius: 10%;
+  border-radius: .3rem;
   justify-content: center;
 }
 
