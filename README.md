@@ -1,5 +1,7 @@
 # cats
 
+![alt text](https://github.com/damstaylor/cats/blob/master/cats-portfolio-preview.png?raw=true)
+
 ## About
 
 The challenge consists in building a web app that displays a grid of pictures of cats + breed name, origin and a link to the wiki page with the data coming from https://docs.thecatapi.com.
