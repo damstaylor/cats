@@ -46,7 +46,7 @@
 export default {
   data() {
     return {
-      API_KEY: "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16",
+      HEADERS: { "Content-Type": "application/json", "x-api-key": "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16" },
       headers: null,
       imgUrl: null,
       pictures: [],
@@ -100,8 +100,7 @@ export default {
       });
     },
     makeRequest(url, method = "GET") {
-      const HEADERS = { "Content-Type": "application/json", "x-api-key": this.API_KEY };
-      const req = new Request(url, { method: method, headers: HEADERS, mode: "cors" });
+      const req = new Request(url, { method: method, headers: this.HEADERS, mode: "cors" });
       return fetch(req).then(data => {
         this.headers = { "pagination-count": Number(data.headers.get("pagination-count")) };
         return data;
