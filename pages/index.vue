@@ -101,8 +101,8 @@ export default {
       const req = new Request(url, { method: method, headers: this.REQUEST_HEADERS, mode: "cors" });
       return fetch(req).then(data => {
         this.responseHeaders = { "pagination-count": Number(data.headers.get("pagination-count")) };
-        return data;
-      }).then(res => res.json()).catch(e => {
+        return data.json();
+      }).catch(e => {
         console.error(e);
         return e;
       });
