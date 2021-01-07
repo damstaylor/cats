@@ -45,8 +45,8 @@
 export default {
   data() {
     return {
-      HEADERS: { "Content-Type": "application/json", "x-api-key": "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16" },
-      headers: null,
+      REQUEST_HEADERS: { "Content-Type": "application/json", "x-api-key": "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16" },
+      responseHeaders: null,
       imgUrl: null,
       pictures: [],
       limit: 9,
@@ -62,7 +62,7 @@ export default {
       return this.page + 1;
     },
     getPaginationCount() {
-      return this.headers ? this.headers["pagination-count"] : null;
+      return this.responseHeaders ? this.responseHeaders["pagination-count"] : null;
     },
     getNumberOfPages() {
       return Math.ceil(this.getPaginationCount / this.limit);
@@ -99,9 +99,9 @@ export default {
       });
     },
     makeRequest(url, method = "GET") {
-      const req = new Request(url, { method: method, headers: this.HEADERS, mode: "cors" });
+      const req = new Request(url, { method: method, headers: this.REQUEST_HEADERS, mode: "cors" });
       return fetch(req).then(data => {
-        this.headers = { "pagination-count": Number(data.headers.get("pagination-count")) };
+        this.responseHeaders = { "pagination-count": Number(data.headers.get("pagination-count")) };
         return data;
       }).then(res => res.json()).catch(e => {
         console.error(e);
