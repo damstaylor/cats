@@ -47,7 +47,6 @@ export default {
     return {
       REQUEST_HEADERS: { "Content-Type": "application/json", "x-api-key": "761e080c-3f90-4fc2-bfb5-bebf6a9c1c16" },
       responseHeaders: null,
-      imgUrl: null,
       pictures: [],
       limit: 9,
       page: 0,
@@ -62,7 +61,7 @@ export default {
       return this.page + 1;
     },
     getPaginationCount() {
-      return this.responseHeaders ? this.responseHeaders["pagination-count"] : null;
+      return this.responseHeaders ? this.responseHeaders["pagination-count"] : 0;
     },
     getNumberOfPages() {
       return Math.ceil(this.getPaginationCount / this.limit);
